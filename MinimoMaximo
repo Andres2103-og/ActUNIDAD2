@@ -1,0 +1,70 @@
+public class MinimoMaximo {
+
+    public static class ResultadoMinMax {
+        int min;
+        int max;
+
+        public ResultadoMinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+    }
+
+
+    public static ResultadoMinMax obtenerMinMax(int[] arr, int lo, int hi) {
+
+        if (lo == hi) {
+            return new ResultadoMinMax(arr[lo], arr[lo]);
+        }
+
+
+        if (hi == lo + 1) {
+            if (arr[lo] < arr[hi]) {
+                return new ResultadoMinMax(arr[lo], arr[hi]);
+            } else {
+                return new ResultadoMinMax(arr[hi], arr[lo]);
+            }
+        }
+
+
+        int mid = lo + (hi - lo) / 2;
+
+  
+        ResultadoMinMax izq = obtenerMinMax(arr, lo, mid);
+        ResultadoMinMax der = obtenerMinMax(arr, mid + 1, hi);
+
+        int minGlobal = Math.min(izq.min, der.min);
+        int maxGlobal = Math.max(izq.max, der.max);
+
+        return new ResultadoMinMax(minGlobal, maxGlobal);
+    }
+
+    public static void main(String[] args) {
+        int[] latencias = {7, 2, 9, 4, 1, 8};
+
+        ResultadoMinMax res = obtenerMinMax(latencias, 0, latencias.length - 1);
+
+
+        System.out.println("Latencia Mínima: " + res.min);
+        System.out.println("Latencia Máxima: " + res.max);
+    }
+}
+
+//1. ¿Por qué mid = lo + (hi - lo) // 2 y no (lo + hi) // 2?
+//- Por el "overflow" (desbordamiento). En C++ o Java, si lo y hi son muy
+ // grandes, sumarlos supera el límite de los enteros (2.147.483.647) y el número
+//- La resta (hi - lo) saca la distancia entre ambos de forma segura sin
+ // superar ese límite. Matemáticamente da exacto el mismo resultado.
+
+//2. ¿Qué complejidad da T(n) = 2T(n/2) + 1?
+//- Da O(n) (lineal). 
+//- Por Teorema Maestro (a=2, b=2, f(n)=1), el trabajo se domina por n^(log_2 2) = n.
+//- En fácil: divides el problema a la mitad, pero como tienes que procesar AMBAS 
+ // mitades, terminas visitando los n elementos de todos modos.
+
+//3. ¿Es mejor que un ciclo simple?
+//- No, el ciclo simple es MEJOR. 
+//- Aunque ambos son O(n), el ciclo simple hace exactamente N comparaciones en un 
+ // solo recorrido y sin gastar memoria.
+//- La recursión T(n) genera sobrecosto (stack de llamadas) y hace entre N y 2N 
+  //operaciones. Es más pesada para hacer lo mismo.
