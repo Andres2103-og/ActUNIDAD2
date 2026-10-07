@@ -38,3 +38,18 @@ public class VersionDefectuosa {
         System.out.println("La primera version defectuosa encontrada es: " + resultado);
     }
 }
+//¿Por qué mid = lo + (hi - lo) // 2 y no (lo + hi) // 2?
+//- Básicamente por el "overflow" (desbordamiento). En lenguajes como C++ o Java, 
+ // los enteros tienen un límite (el int de 32 bits llega hasta 2.147.483.647).
+//- Si lo y hi son números muy grandes, al sumarlos (lo + hi) se pasan de ese 
+  //límite, la compu se confunde y el número se vuelve negativo. ¡Eso te rompe todo!
+//- Al restar (hi - lo) primero, sacas la distancia entre los dos, que siempre es 
+ // /un número chiquito y seguro. Luego le sumas lo y listo, llegas al centro sin 
+  //arriesgarte a romper la memoria. Matemáticamente da exacto lo mismo.
+
+//¿Cuántas pruebas para 1.000.000 de datos?
+//- Máximo 20 intentos.
+//- Como la búsqueda binaria parte el arreglo a la mitad en cada paso, la fórmula 
+  //es log2(N). 
+//--- Si haces las cuentas: 2^19 es 524.288 (no alcanza) y 2^20 es 1.048.576. 
+ // Así que con 20 cortes ya cubres el millón sobrado.
