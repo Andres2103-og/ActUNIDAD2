@@ -1,0 +1,40 @@
+# ActUNIDAD2
+Andres contreras- Juan bernal
+public class VersionDefectuosa {
+
+
+
+    public static boolean esDefectuosa(int version) {
+
+        int primeraMala = 6;
+        return version >= primeraMala;
+    }
+
+
+   
+    public static int primeraDefectuosa(int lo, int hi) {
+    
+        if (lo == hi) {
+            return lo;
+        }
+        int mid = lo + (hi - lo) / 2;
+
+        
+        if (esDefectuosa(mid)) {
+         
+            return primeraDefectuosa(lo, mid);
+        } else {
+
+            return primeraDefectuosa(mid + 1, hi);
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 13;
+        int resultado = primeraDefectuosa(1, n);
+
+
+        System.out.println("Total de versiones: " + n);
+        System.out.println("La primera version defectuosa encontrada es: " + resultado);
+    }
+}
